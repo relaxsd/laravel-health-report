@@ -6,49 +6,25 @@ Use it from scheduled Artisan commands, event listeners, or anywhere you need to
 
 ## Installation
 
-### Via Composer (path repository)
-
-Add to your Laravel app's `composer.json`:
+This package is not on Packagist. Add the GitHub repository to your Laravel app's `composer.json`:
 
 ```json
 {
     "repositories": [
         {
-            "type": "path",
-            "url": "../my-health-monitor/plugins/laravel-health-report"
+            "type": "vcs",
+            "url": "https://github.com/relaxsd/laravel-health-report"
         }
     ],
     "require": {
-        "relaxsd/laravel-health-report": "*"
+        "relaxsd/laravel-health-report": "^0.1.0"
     }
 }
 ```
 
 Then run `composer update relaxsd/laravel-health-report`.
 
-### From GitHub
-
-```json
-{
-    "require": {
-        "relaxsd/laravel-health-report": "dev-master"
-    }
-}
-```
-
-### Manual copy
-
-Copy this directory into your project (e.g. `packages/relaxsd/laravel-health-report`) and add the PSR-0 autoload entry to your app's `composer.json`:
-
-```json
-"autoload": {
-    "psr-0": {
-        "Relaxsd\\HealthReport\\": "packages/relaxsd/laravel-health-report/src/"
-    }
-}
-```
-
-Run `composer dump-autoload`.
+Composer resolves versions from Git tags on the repository (e.g. `0.1.0`).
 
 ## Configuration
 
@@ -102,7 +78,6 @@ HealthReport::send(array(
     'status' => 'ok',
     'queue_size' => Queue::size(),
     'failed_jobs' => DB::table('failed_jobs')->count(),
-    'reported_at' => date('c'),
 ));
 ```
 
@@ -124,7 +99,6 @@ class SendHealthReport extends Command
         $report = array(
             'status' => 'ok',
             'app_env' => App::environment(),
-            'reported_at' => date('c'),
         );
 
         try {
